@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hh.news.mapper.NewsManageMapper">
+
+    <!--获得下拉菜单的值-->
+    <select id="findAllColumnName" resultType="Column">
+       SELECT c_name,c_id FROM n_column
+    </select>
+
+    <!--查看分页数据-->
+    <select id="getAllNews" parameterType="QueryVo" resultType="News">
+        SELECT * FROM n_paper left JOIN n_column
+        ON n_paper.p_c_id = n_column.c_id
+        <where>
+            <if test="title != null and title != ''">
+                title like "%"#{title}"%"
+            </if>
+        </where>
+        ORDER  BY p_id DESC
+        LIMIT #{currentPage},#{pageSize}
+    </select>
+
+    <!--计数 栏目数据总数-->
+    <select id="getNewsTotal" parameterType="QueryVo" resultType="integer">
+        SELECT COUNT(*) FROM n_paper
+        <where>
+            <if test="title != null and title != ''">
+                title like "%"#{title}"%"
+            </if>
+        </where>
+    </select>
+
+    <!--根据id查询所属栏目-->
+    <select id="getNewsByColumnId" parameterType="Integer" resultType="News">
+            SELECT * FROM n_paper left JOIN n_column
+            ON n_paper.p_c_id = n_column.c_id
+            WHERE n_paper.p_c_id = #{c_id}
+    </select>
+
+    <!--保存新闻-->
+    <insert id="saveNews" parameterType="News" >
+      INSERT INTO n_paper (title, img, date ,writer,p_c_id,content,state) VALUES (#{title},#{img},#{formatDate},#{writer},#{p_c_id},#{content},#{state})
+    </insert>
+
+    <!--根据id查询对应新闻-->
+    <select id="getNewsById" parameterType="News" resultType="News">
+        SELECT * FROM n_paper WHERE p_id = #{p_id}
+    </select>
+
+    <!--修改新闻-->
+   <update id="updateNews" parameterType="News">
+       UPDATE n_paper SET  title = #{title},content = #{content},date = #{date},p_c_id = #{p_c_id},
+       writer = #{writer},state = #{state}
+       <if test="img!=null and img!=''">
+        ,img = #{img}
+       </if>
+        WHERE p_id = #{p_id}
+   </update>
+
+    <!--逻辑删除新闻-->
+    <update id="deleteNewsById" parameterType="QueryVo">
+        UPDATE n_paper SET state = #{newsState} WHERE p_id = #{p_id}
+    </update>
+
+    <!--查询当前新闻状态-->
+    <select id="getNewsState" parameterType="integer" resultType="integer">
+      SELECT state FROM n_paper WHERE p_id = #{p_id}
+    </select>
+</mapper>

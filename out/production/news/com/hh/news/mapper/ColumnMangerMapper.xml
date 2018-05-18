@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hh.news.mapper.ColumnMangerMapper">
+    <!-- 查询 -->
+    <select id="selectColumnAll"  parameterType="QueryVo"  resultType="Column">
+      SELECT * FROM n_column
+    <where>
+        <if test="c_name != null and c_name != ''">
+            c_name like "%"#{c_name}"%"
+        </if>
+    </where>
+        LIMIT #{currentPage},#{pageSize}
+    </select>
+    <!--计数 栏目数据总数-->
+    <select id="countColumn" parameterType="QueryVo" resultType="integer">
+    SELECT COUNT(*) FROM n_column
+        <where>
+            <if test="c_name != null and c_name != ''">
+                c_name like "%"#{c_name}"%"
+            </if>
+        </where>
+    </select>
+
+    <!--添加栏目-->
+    <insert id="addColumn" parameterType="Column">
+     INSERT INTO n_column(c_name,c_state) VALUES (#{c_name},#{c_state})
+    </insert>
+
+    <!--获取栏目名-->
+    <select id="getColumnName" resultType="String" parameterType="Integer">
+        SELECT c_name FROM n_column
+        <where>
+            c_id = #{c_id}
+        </where>
+
+    </select>
+    <!--更新栏目名-->
+    <update id="updataColumnName" parameterType="Column">
+          UPDATE n_column SET c_name = #{c_name}
+          <where>
+              c_id  = #{c_id}
+          </where>
+    </update>
+    <!--删除栏目-->
+    <update id="deleteColumn" parameterType="QueryVo">
+        UPDATE n_column SET c_state = #{columnState}
+        <where>
+        c_id = #{c_id}
+        </where>
+    </update>
+    <!--查询column状态 -->
+    <select id="getColumnState" parameterType="integer" resultType="integer">
+        SELECT c_state FROM n_column WHERE c_id = #{c_id}
+    </select>
+</mapper>

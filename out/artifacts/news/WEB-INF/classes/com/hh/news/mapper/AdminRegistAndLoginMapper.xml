@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hh.news.mapper.AdminRegistAndLoginMapper">
+    <!--登录,验证用户名-->
+    <select id="adminLoginByUsername" resultType="String" parameterType="Admin">
+      SELECT username FROM n_admin
+      <where>
+          username = #{username}
+      </where>
+    </select>
+    <!--登录,验证密码-->
+    <select id="adminLoginByPassword" resultType="String" parameterType="Admin">
+      SELECT password FROM n_admin
+      <where>
+          password = #{password} AND username = #{username}
+      </where>
+    </select>
+    <!--保存注册信息-->
+    <insert id="saveAdmin" parameterType="Admin">
+        INSERT INTO n_admin(username,password) VALUES (#{username},#{password})
+    </insert>
+    <!--查找是否存在用户名-->
+    <select id="getAllUsername" resultType="String" parameterType="String">
+        SELECT username FROM n_admin WHERE username = #{username}
+    </select>
+</mapper>
