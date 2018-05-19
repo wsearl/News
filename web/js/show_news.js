@@ -12,10 +12,4 @@ $(document).ready(function () {
               $("#titleNews").append(result.title)
         }
     })
-
-
-
-
-
-
 })
