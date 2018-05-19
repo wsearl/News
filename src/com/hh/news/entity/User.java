@@ -3,6 +3,15 @@ package com.hh.news.entity;
 public class User {
     private String username;
     private String password;
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public String getUsername() {
         return username;
