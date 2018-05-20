@@ -21,6 +21,14 @@
             <mvc:exclude-mapping path="/loginAdmin"/>
             <mvc:exclude-mapping path="/logout"/>
             <mvc:exclude-mapping path="/userRegist"/>
+            <mvc:exclude-mapping path="/showColumn"/>
+            <mvc:exclude-mapping path="/showNews"/>
+            <mvc:exclude-mapping path="/showNewsById/**"/>
+            <mvc:exclude-mapping path="/userLogin"/>
+            <mvc:exclude-mapping path="/index.html"/>
+            <mvc:exclude-mapping path="/login.html"/>
+            <mvc:exclude-mapping path="/news.html"/>
+            <mvc:exclude-mapping path="/signup.html"/>
             <!-- 配置具体的拦截器 -->
             <bean class="com.hh.news.interceptor.LoginHandlerInterceptor" />
         </mvc:interceptor>

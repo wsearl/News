@@ -10,6 +10,23 @@
   <script src="js/jquery.min.js"></script>
   <script src="js/show_index.js"></script>
 </head>
+<script type="text/javascript">
+  $(document).ready(function () {
+
+      (function ($) {
+          $.getUrlParam = function (name) {
+              var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+              var r = window.location.search.substr(1).match(reg);
+              if (r != null) return unescape(r[2]); return null;
+          }
+      })(jQuery);
+      var xx = $.getUrlParam('user');
+      if (xx!=null){
+            // $("#userLoginAndResit").remove()
+
+      }
+  })
+</script>
 <body>
   <div class="navbar navbar-default">
     <div class="container">
@@ -26,7 +43,7 @@
           <li><a href="#">数读</a></li>
           <li><a href="#">社会</a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
+        <ul id="userLoginAndResit" class="nav navbar-nav navbar-right">
           <li><a href="login.html">登录</a></li>
           <li><a href="signup.html">注册</a></li>
         </ul>
@@ -110,7 +127,7 @@
     </div>
   </div>
   <div class="footer">
-    © 2017 拴蛋头条 中国互联网举报中心京ICP证1401号京ICP备125439号-3京公网安备
+    © 2017 xxx头条 中国互联网举报中心京ICP证1401号京ICP备125439号-3京公网安备
   </div>
 </body>
 </html>
